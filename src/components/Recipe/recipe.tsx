@@ -35,11 +35,3 @@ function Recipe({recipeData, onClick}: {recipeData: recipeData, onClick: () => v
 }
 
 export default Recipe
-
-// function getIngredientQuantityString(ingredientImageUrl: string) {
-//   const split = ingredientImageUrl.split(" ");
-
-//   if(parseInt(split[split.length - 1]) > 1)
-//     return split[split.length - 1];
-//   else return "";
-// }
