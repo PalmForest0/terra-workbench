@@ -1,12 +1,12 @@
-import './item-list-element-styles.css';
+import './item-list-element-styles.scss';
 
 import { itemData } from '../../App';
 
 function ItemListElement({ itemData }: { itemData: itemData }) {
   return (
-    <div className='list-element-container' title={itemData.name}>
+    <div className='list-element' title={itemData.name}>
       <img src={`items/${itemData.name}.png`}/>
-      <span className='ingredient-name'>{itemData.name}</span>
+      <span className='name'>{itemData.name}</span>
       <span>x{itemData.quantity}</span>
     </div>
   )

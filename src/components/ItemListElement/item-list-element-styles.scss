@@ -1,0 +1,31 @@
+.list-element {
+  	display: flex;
+  	align-items: center;
+  	justify-content: center;
+  
+	gap: 25px;
+  	padding: 9px;
+  	width: 92%;
+
+  	background-color: #222222;
+  	border-radius: 15px;
+
+  	scroll-snap-align: start;
+
+  	img {
+    	height: 27px;
+  	}
+
+	span {
+  		font-size: 1.3em;
+  		font-weight: bold;
+	}
+
+	.name {
+  		white-space: nowrap;
+  		overflow: hidden;
+  		text-overflow: ellipsis;
+  		display: block;
+  		max-width: 250px;
+	}
+}
