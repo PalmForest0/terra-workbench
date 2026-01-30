@@ -19,6 +19,7 @@
   	width: 75%;
 
 	.header {
+		position: relative;
   		display: flex;
   		align-items: center;
   		justify-content: center;
@@ -40,6 +41,17 @@
   			font-size: 3.2em;
   			line-height: 1.1;
   			margin: 0;
+		}
+
+		.github-icon {
+			height: 35px;
+			width: auto;
+
+			position: absolute;
+			top: 30px;
+			left: 15px;
+
+			cursor: pointer;
 		}
 	}
 }
