@@ -1,4 +1,5 @@
 import './styles/App.scss';
+import "./styles/theme.scss";
 
 import { useState } from 'react';
 
@@ -18,7 +19,11 @@ function App() {
     <>
       <div className='left-side'>
         <div className='header'>
-          <img src='./images/icon.png'/>
+          <a href="https://github.com/PalmForest0/terra-workbench" target="_blank">
+            <img src='/images/github-mark-white.svg' className='github-icon' />
+          </a>
+          
+          <img src='/images/icon.svg'/>
           <h1>TerraWorkbench</h1>
         </div>
 

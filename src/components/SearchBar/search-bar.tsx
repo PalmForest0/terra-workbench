@@ -1,13 +1,11 @@
 import './search-bar-styles.scss';
 
 import { useEffect, useState } from 'react';
-
-import { MdClear } from "react-icons/md";
 import { useCookies } from 'react-cookie';
-
 import { searchParams } from '../../App';
 
 import Checkbox from '../Checkbox/checkbox';
+import { X } from 'lucide-react';
 
 function SearchBar({ paramsChanged }: { paramsChanged: (params: searchParams) => void }) {
   const [cookies, setCookie] = useCookies(['searchParams'])
@@ -49,7 +47,7 @@ function SearchBar({ paramsChanged }: { paramsChanged: (params: searchParams) =>
     <div className='search-bar-container'>
       <div className='search-box-container' >
         <input type='text' placeholder='Search...' value={params.query} onChange={(e) => {setParams({ ...params, query: e.target.value })}}/>
-        <div className='clear-search-icon' onClick={() => setParams({ ...params, query: "" })}><MdClear /></div>
+        <div className='clear-search-icon' onClick={() => setParams({ ...params, query: "" })}><X /></div>
       </div>
       
       <div className='checkbox-container'>

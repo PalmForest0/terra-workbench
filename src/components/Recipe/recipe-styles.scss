@@ -1,6 +1,6 @@
 .recipe {
     display: flex;
-    column-gap: 40px;
+    column-gap: 30px;
 
     height: 60px;
     width: auto;
@@ -8,7 +8,7 @@
     text-align: start;
     font-size: 0.8em;
 
-    background-color: #161616;
+    background-color: var(--foreground-color);
 
     padding: 15px 25px 15px 15px;
     border-radius: 16px;
@@ -20,7 +20,7 @@
     scroll-snap-align: start;
 
     &:hover {
-        border-color: #1f8ec1ce;
+        border-color: var(--select-color);
     }
 
     img {
@@ -36,15 +36,11 @@
         font-weight: bold;
         font-size: 1.15em;
 
-        text-shadow: #000 5px 5px 5px;
-        -webkit-font-smoothing: antialiased;
-
         z-index: 10;
         user-select: none;
 
         align-self: flex-end;
         margin-bottom: -9px;
-        margin-left: -4px;
     }
 
     .left-side {

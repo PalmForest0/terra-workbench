@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import './checkbox-styles.scss';
 
-import { FaCheck } from "react-icons/fa";
+import { Check } from 'lucide-react';
 
 function Checkbox({ value, valueChanged }: { value: boolean, valueChanged: (value: boolean) => void }) {
   
@@ -13,7 +13,7 @@ function Checkbox({ value, valueChanged }: { value: boolean, valueChanged: (valu
     <button 
         className={value ? "checkbox checkbox-checked" : "checkbox"} 
         onClick={() => {valueChanged(!value)}}>
-          <FaCheck className='checkmark-icon' />
+          <Check className='checkmark-icon' />
     </button>
   )
 }
