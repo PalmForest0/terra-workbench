@@ -48,7 +48,7 @@ $light-gray: #333333;
     }
 
     .tab-content {
-        background-color: #303030;
+        background-color: var(--foreground-color);
         height: 100%;
         padding: 10px;
     }

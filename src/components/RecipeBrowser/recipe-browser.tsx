@@ -18,7 +18,7 @@ function RecipeBrowser({ params, setSelectedRecipe }: { params: searchParams, se
     resetScroll();
   }, [params]);
 
-  // Scroll to the top when the page is changes
+  // Scroll to the top when the page is changed
   useEffect(() => {
     resetScroll();
   }, [pageNumber]);

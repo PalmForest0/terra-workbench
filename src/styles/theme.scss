@@ -1,0 +1,17 @@
+/* Light mode (default) */
+:root {
+  --background-color: #eef2f6;
+  --foreground-color: #ffffff;
+  --text-color: #1f2937;
+  --select-color: #2ebce7;
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-color: #242424;
+    --foreground-color: #161616;
+    --text-color: #e5e7eb;
+    --select-color: #359ab9;
+  }
+}

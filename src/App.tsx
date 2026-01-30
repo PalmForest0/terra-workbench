@@ -1,4 +1,5 @@
 import './styles/App.scss';
+import "./styles/theme.scss";
 
 import { useState } from 'react';
 
