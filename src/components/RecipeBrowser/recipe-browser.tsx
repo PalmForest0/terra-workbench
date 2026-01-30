@@ -2,6 +2,7 @@ import Recipe from '../Recipe/recipe';
 import './recipe-browser-styles.scss'
 
 import { useEffect, useRef, useState } from 'react'
+import { useSearchParams } from "react-router";
 import { recipeData, searchParams } from '../../App';
 
 import recipesJson from '../../data/recipes_Vanilla.json'
@@ -12,7 +13,23 @@ function RecipeBrowser({ params, setSelectedRecipe }: { params: searchParams, se
   const [pageSize] = useState<number>(100);
   const browserRef = useRef<HTMLDivElement | null>(null);
 
-  // Reset to page 1 when search params change
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  useEffect(() => {
+    const selectedId = searchParams.get("selected");
+    console.log(selectedId);
+    if(selectedId) {
+      const selectedRecipe = recipeDatas.find(recipe => parseInt(selectedId) ===  recipe.id);
+      if(selectedRecipe) {
+        setSelectedRecipe(selectedRecipe);
+      }
+      else {
+        setSearchParams({}); // Clear garbage query parameter
+      }
+    }
+  }, [searchParams]);
+
+  // Reset to page 1 when search changes
   useEffect(() => { 
     setPageNumber(0);
     resetScroll();
@@ -28,7 +45,8 @@ function RecipeBrowser({ params, setSelectedRecipe }: { params: searchParams, se
       <div className='recipes-container' ref={browserRef} >
         {applySearchParams().slice(pageSize * pageNumber, pageSize * (pageNumber + 1)).map(recipeData => (
           <Recipe key={recipeData.id} recipeData={recipeData} onClick={() => {
-            setSelectedRecipe(recipeData)
+            setSelectedRecipe(recipeData);
+            setSearchParams({ selected: recipeData.id.toString() });
           }} />
         ))}
       </div>
