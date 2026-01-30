@@ -9,6 +9,8 @@ import recipesJson from '../../data/recipes_Vanilla.json'
 
 function RecipeBrowser({ params, setSelectedRecipe }: { params: searchParams, setSelectedRecipe: (newRecipe: recipeData | undefined) => void }) {
   const [recipeDatas] = useState<recipeData[]>(recipesJson as recipeData[]);
+  const [filteredRecipeDatas, setFilteredRecipeDatas] = useState<recipeData[]>(recipeDatas);
+
   const [pageNumber, setPageNumber] = useState<number>(0);
   const [pageSize] = useState<number>(100);
   const browserRef = useRef<HTMLDivElement | null>(null);
@@ -30,7 +32,8 @@ function RecipeBrowser({ params, setSelectedRecipe }: { params: searchParams, se
   }, [searchParams]);
 
   // Reset to page 1 when search changes
-  useEffect(() => { 
+  useEffect(() => {
+    setFilteredRecipeDatas(getFilteredRecipes());
     setPageNumber(0);
     resetScroll();
   }, [params]);
@@ -40,10 +43,12 @@ function RecipeBrowser({ params, setSelectedRecipe }: { params: searchParams, se
     resetScroll();
   }, [pageNumber]);
 
+  const getPageCount = () : number => Math.ceil(filteredRecipeDatas.length / pageSize);
+
   return (
     <div className='recipe-browser'>
       <div className='recipes-container' ref={browserRef} >
-        {applySearchParams().slice(pageSize * pageNumber, pageSize * (pageNumber + 1)).map(recipeData => (
+        {filteredRecipeDatas.slice(pageSize * pageNumber, pageSize * (pageNumber + 1)).map(recipeData => (
           <Recipe key={recipeData.id} recipeData={recipeData} onClick={() => {
             setSelectedRecipe(recipeData);
             setSearchParams({ selected: recipeData.id.toString() });
@@ -54,13 +59,13 @@ function RecipeBrowser({ params, setSelectedRecipe }: { params: searchParams, se
       <div className='page-selector'>
         <button onClick={() => setPageNumber(pageNumber - 1)} disabled={pageNumber <= 0} >Previous</button>
         <span>Page {pageNumber + 1}</span>
-        <button onClick={() => setPageNumber(pageNumber + 1)} disabled={(pageNumber + 1) * pageSize >= applySearchParams().length} >Next</button>
+        <button onClick={() => setPageNumber(pageNumber + 1)} disabled={pageNumber >= getPageCount() - 1} >Next</button>
       </div>
     </div>
   )
 
 
-  function applySearchParams() {
+  function getFilteredRecipes() {
     const query = params.query.toLowerCase().trim();
 
     return recipeDatas.filter((data, index) => {

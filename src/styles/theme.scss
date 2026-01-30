@@ -1,17 +1,23 @@
 /* Light mode (default) */
 :root {
-  --background-color: #eef2f6;
+  --background-color: #f0f0f0;
   --foreground-color: #ffffff;
+  --foreground-disabled-color: #e0e3e6;
   --text-color: #1f2937;
+  --text-disabled-color: #8e9194;
   --select-color: #2ebce7;
+  --details-color: #e4e4e4;
 }
 
 /* Dark mode */
 @media (prefers-color-scheme: dark) {
   :root {
     --background-color: #242424;
-    --foreground-color: #161616;
+    --foreground-color: #1b1b1b;
+    --foreground-disabled-color: #202020;
     --text-color: #e5e7eb;
+    --text-disabled-color: #6d6d6d;
     --select-color: #359ab9;
+    --details-color: #0c0c0c;
   }
 }

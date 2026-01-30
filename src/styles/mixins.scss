@@ -19,5 +19,9 @@
   	}
   	&:disabled {
     	border-color: #ffffff00;
+		background-color: var(--foreground-disabled-color);
+		color: var(--text-disabled-color);
+
+		cursor: auto;
   	}
 }
