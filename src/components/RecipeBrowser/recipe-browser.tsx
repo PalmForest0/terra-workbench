@@ -11,55 +11,39 @@ function RecipeBrowser({ params, setSelectedRecipe }: { params: searchParams, se
   const [recipeDatas] = useState<recipeData[]>(recipesJson as recipeData[]);
   const [filteredRecipeDatas, setFilteredRecipeDatas] = useState<recipeData[]>(recipeDatas);
 
-  const [searchParams, setSearchParams] = useSearchParams();
-
+  const [pageNumber, setPageNumber] = useState<number>(0);
   const [pageSize] = useState<number>(100);
-  const [pageCount, setPageCount] = useState<number>(Math.ceil(recipeDatas.length / pageSize));
-  const [pageNumber, setPageNumber] = useState<number>(() => {
-    const page = searchParams.get("page");
-    const pageId = page ? parseInt(page) : 0;
-    return pageId >= 0 && pageId <= Math.ceil(recipeDatas.length / pageSize) - 1 ? pageId : 0;
-  });
- 
   const browserRef = useRef<HTMLDivElement | null>(null);
 
-  // Load selection from search params on mount
+  const [searchParams, setSearchParams] = useSearchParams();
+
   useEffect(() => {
-    const selectedId = searchParams.get("select");
+    const selectedId = searchParams.get("selected");
+    console.log(selectedId);
     if(selectedId) {
       const selectedRecipe = recipeDatas.find(recipe => parseInt(selectedId) ===  recipe.id);
       if(selectedRecipe) {
         setSelectedRecipe(selectedRecipe);
       }
       else {
-        removeQueryParam("select"); // Clear garbage query parameter
+        setSearchParams({}); // Clear garbage query parameter
       }
     }
-  }, []);
+  }, [searchParams]);
 
   // Reset to page 1 when search changes
   useEffect(() => {
-    filterRecipes();
+    setFilteredRecipeDatas(getFilteredRecipes());
+    setPageNumber(0);
     resetScroll();
-
-    // Reset page only if the new filtered recipes don't include the current page
-    if (pageNumber > pageCount - 1) {
-      setPageNumber(0);
-    }
   }, [params]);
 
   // Scroll to the top when the page is changed
   useEffect(() => {
     resetScroll();
-
-    console.log(pageNumber);
-    if(pageNumber != 0) {
-      setQueryParam("page", pageNumber.toString());
-    }
-    else {
-      removeQueryParam("page");
-    }
   }, [pageNumber]);
+
+  const getPageCount = () : number => Math.ceil(filteredRecipeDatas.length / pageSize);
 
   return (
     <div className='recipe-browser'>
@@ -67,7 +51,7 @@ function RecipeBrowser({ params, setSelectedRecipe }: { params: searchParams, se
         {filteredRecipeDatas.slice(pageSize * pageNumber, pageSize * (pageNumber + 1)).map(recipeData => (
           <Recipe key={recipeData.id} recipeData={recipeData} onClick={() => {
             setSelectedRecipe(recipeData);
-            setQueryParam("select", recipeData.id.toString());
+            setSearchParams({ selected: recipeData.id.toString() });
           }} />
         ))}
       </div>
@@ -75,16 +59,16 @@ function RecipeBrowser({ params, setSelectedRecipe }: { params: searchParams, se
       <div className='page-selector'>
         <button onClick={() => setPageNumber(pageNumber - 1)} disabled={pageNumber <= 0} >Previous</button>
         <span>Page {pageNumber + 1}</span>
-        <button onClick={() => setPageNumber(pageNumber + 1)} disabled={pageNumber >= pageCount - 1} >Next</button>
+        <button onClick={() => setPageNumber(pageNumber + 1)} disabled={pageNumber >= getPageCount() - 1} >Next</button>
       </div>
     </div>
   )
 
 
-  function filterRecipes() {
+  function getFilteredRecipes() {
     const query = params.query.toLowerCase().trim();
-    
-    setFilteredRecipeDatas(recipeDatas.filter((data, index) => {
+
+    return recipeDatas.filter((data, index) => {
       if(!params.showAlternatives && index > 0 && data.result.name == recipeDatas[index - 1].result.name) {
         return false;
       }
@@ -108,27 +92,13 @@ function RecipeBrowser({ params, setSelectedRecipe }: { params: searchParams, se
       }
 
       return false;
-    }));
-
-    setPageCount(Math.ceil(recipeDatas.length / pageSize));
+    });
   }
 
   function resetScroll() {
     if(browserRef.current && browserRef.current.firstChild) {
       (browserRef.current.firstChild as HTMLElement).scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
-  }
-
-  function setQueryParam(name : string, value : string) {
-    const params = new URLSearchParams(searchParams);
-    params.set(name, value);
-    setSearchParams(params);
-  }
-
-  function removeQueryParam(name : string) {
-    const params = new URLSearchParams(searchParams);
-    params.delete(name);
-    setSearchParams(params);
   }
 }
 
