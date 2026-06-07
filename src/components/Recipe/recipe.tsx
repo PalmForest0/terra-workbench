@@ -11,11 +11,11 @@ function Recipe({ recipeData, onClick }: { recipeData: recipeData; onClick: () =
     >
       <div className="left-side">
         <img
-          src={`${import.meta.env.BASE_URL}/images/items/${recipeData.result.name}.png`}
+          src={`${import.meta.env.BASE_URL}/items/${recipeData.result.name}.png`}
           title={recipeData.result.name}
           onError={(e) => {
             (e.target as HTMLImageElement).onerror = null;
-            (e.target as HTMLImageElement).src = "./images/undefined.gif";
+            (e.target as HTMLImageElement).src = `${import.meta.env.BASE_URL}/images/undefined.gif`;
           }}
         />
         <span className="quantity-label">{recipeData.result.quantity > 1 ? recipeData.result.quantity : ""}</span>
@@ -28,11 +28,11 @@ function Recipe({ recipeData, onClick }: { recipeData: recipeData; onClick: () =
             <div className="ingredient" key={`${recipeData.result.name}.ingredient${recipeData.ingredients.indexOf(ingredient)}`}>
               <img
                 className="ingredient-image"
-                src={`${import.meta.env.BASE_URL}/images/items/${ingredient.name}.png`}
+                src={`${import.meta.env.BASE_URL}/items/${ingredient.name}.png`}
                 title={ingredient.name}
                 onError={(e) => {
                   (e.target as HTMLImageElement).onerror = null;
-                  (e.target as HTMLImageElement).src = "./images/undefined.gif";
+                  (e.target as HTMLImageElement).src = `${import.meta.env.BASE_URL}/images/undefined.gif`;
                 }}
               />
               <span className="quantity-label">{ingredient.quantity > 1 ? ingredient.quantity : ""}</span>

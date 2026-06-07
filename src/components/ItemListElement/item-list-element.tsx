@@ -5,7 +5,7 @@ import { itemData } from "../../App";
 function ItemListElement({ itemData }: { itemData: itemData }) {
   return (
     <div className="list-element" title={itemData.name}>
-      <img src={`${import.meta.env.BASE_URL}/images/items/${itemData.name}.png`} />
+      <img src={`${import.meta.env.BASE_URL}/items/${itemData.name}.png`} />
       <span className="name">{itemData.name}</span>
       <span>x{itemData.quantity}</span>
     </div>
